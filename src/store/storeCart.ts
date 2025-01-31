@@ -5,52 +5,39 @@ const cartStore = (set: any, get: any) => ({
   cart: [],
   total: 0,
   addCart: (product: any) => {
-    set((state: any) => ({
-      cart: [...state.cart, { ...product, status: "available" }],
-      noOfAvailable: state.noOfAvailable + 1,
-    }));
+    const cartData = get().cart;
+
+    const dishExist = cartData.findIndex((dish: any) => dish.name === product.name);
+
+    if(dishExist !== -1) {
+      cartData[dishExist].quantity += 1;
+      set({
+        cart: cartData,
+      });
+    } else {
+      set({
+        cart: [...cartData, { ...product, quantity: 1 }],
+      });
+    }
   },
-  issueBook: (id: number) => {
-    const cart = get().cart;
-    const updatedBooks = cart?.map((dish: any) => {
-      if (dish.id === id) {
-        return {
-          ...cart,
-          status: "issued",
-        };
-      } else {
-        return cart;
+  deleteCart: (product: any) => {
+    const cartData = get().cart;
+    const dishExist = cartData.findIndex((dish: any) => dish.name === product.name);
+
+    if(dishExist !== -1) {
+      cartData[dishExist].quantity -= 1;
+      if(cartData[dishExist].quantity === 0) {
+        cartData.splice(dishExist, 1);
       }
-    });
-    set((state: any) => ({
-      books: updatedBooks,
-      noOfAvailable: state.noOfAvailable - 1,
-      noOfIssued: state.noOfIssued + 1,
-    }));
-  },
-  returnBook: (id: number) => {
-    const cart = get().cart;
-    const updatedBooks = cart?.map((dish: any) => {
-      if (dish.id === id) {
-        return {
-          ...dish,
-          status: "available",
-        };
-      } else {
-        return dish;
-      }
-    });
-    set((state: any) => ({
-      books: updatedBooks,
-      noOfAvailable: state.noOfAvailable + 1,
-      noOfIssued: state.noOfIssued - 1,
-    }));
+      set({
+        cart: cartData,
+      });
+    }
   },
   reset: () => {
     set({
       cart: [],
-      noOfAvailable: 0,
-      noOfIssued: 0,
+      total: 0,
     });
   },
 });

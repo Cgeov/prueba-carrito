@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="bg-csRose50 w-[90%] mx-auto max-w-[1200px] py-10 lg:py-5">
       <h1 className="text-csRose900 font-bold text-3xl mt-5">Desserts</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 mt-7">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-5 mt-7">
           {dishData.map((dish: any, index: number) => {
             const { image, ...rest } = dish;
             return (
@@ -30,7 +30,7 @@ function App() {
             );
           })}
         </div>
-        <div>
+        <div className="bg-white h-min rounded-xl p-4">
           <h2 className="text-3xl text-csRed">Your Cart (0)</h2>
 
           <div className="flex justify-center items-center flex-col mt-5">
