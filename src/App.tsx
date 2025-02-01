@@ -4,9 +4,13 @@ import DishCard from "./components/dishCard";
 import dishData from "./data/data.json";
 import useScreenSize from "./hooks/useScreenSize";
 import emptyCart from "./assets/emptyCart.svg";
+import useCartStore from "./store/storeCart";
+import deleteDish from "./assets/removeItem.svg";
+import carbonTree from "./assets/carbonTree.svg";
 
 function App() {
   const { width } = useScreenSize();
+  const { cart,total, deleteCart } = useCartStore();
 
   return (
     <div className="bg-csRose50 w-[90%] mx-auto max-w-[1200px] py-10 lg:py-5">
@@ -31,11 +35,40 @@ function App() {
           })}
         </div>
         <div className="bg-white h-min rounded-xl p-4">
-          <h2 className="text-3xl text-csRed">Your Cart (0)</h2>
+          <h2 className="text-3xl text-csRed">Your Cart ({cart.length})</h2>
 
-          <div className="flex justify-center items-center flex-col mt-5">
-            <img src={emptyCart} />
-            <p className="mt-10">Your added items will appear here</p>
+          <div className="flex justify-center flex-col mt-5">
+            {cart.length == 0 ? (
+              <div className="flex flex-col items-center">
+                <img src={emptyCart} />
+                <p className="mt-10">Your added items will appear here</p>
+              </div>
+            ) : (
+              <>
+              <div>
+                {cart.map((dish: any, index: number) => {
+                  return (
+                    <div key={index} className="flex justify-between w-full items-center mb-5">
+                      <div>
+                        <p>{dish.name}</p>
+                        <div className="flex gap-3">
+                          <span className="text-csRed">x{dish.quantity}</span>
+                          <span className="text-csRose500">@{dish.price}</span>
+                          <span className="text-csRose500">${dish.subTotal ?? 0}</span>
+                        </div>
+                      </div>
+                      <img onClick={()=>deleteCart({name: dish.name}, true)} src={deleteDish}></img>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="flex justify-between">
+                Order Total
+                <span>{total}</span>
+              </div>
+              </>
+            )}
           </div>
         </div>
       </div>
