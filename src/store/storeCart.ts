@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 
-const useCartStore = create((set:any, get:any) => ({
+const useCartStore = create((set: any, get: any) => ({
   cart: [],
   total: 0,
   addCart: (product: any) => {
@@ -33,7 +33,8 @@ const useCartStore = create((set:any, get:any) => ({
 
     if (dishExist !== -1) {
       cartData[dishExist].quantity -= 1;
-
+      cartData[dishExist].subTotal =
+        cartData[dishExist].quantity * product.price;
       if (deleteAll) {
         cartData.splice(dishExist, 1);
       } else if (cartData[dishExist].quantity === 0) {
@@ -52,16 +53,17 @@ const useCartStore = create((set:any, get:any) => ({
   },
 }));
 
-useCartStore.subscribe(
-  (cart) => {
-    const data = cart.cart;
+useCartStore.subscribe((cart) => {
+  const data = cart.cart;
+  if (data.length > 0) {
     let total: number = 0;
-    data.forEach((dish:any)=>{
+    data.forEach((dish: any) => {
       total += dish.subTotal;
-    })
-    console.log(total)
-    
+    });
+    if (total !== cart.total) {
+      useCartStore.setState({ total });
+    }
   }
-);
+});
 
 export default useCartStore;

@@ -12,9 +12,9 @@ export default function DishCard({ name, category, image, price }: IDish) {
   const cartItem: any = cartItems.find((dish: any) => dish.name === name);
 
   return (
-    <div className="py-5 flex flex-col mx-auto">
+    <div className={"py-5 flex flex-col mx-auto"}>
       <div className="relative flex justify-center">
-        <img className="rounded-xl w-full h-full" src={image}></img>
+        <img className={"rounded-lg w-full h-full " + (cartItem && 'border-2 border-csRed')} src={image}></img>
         {cartItem ? (
           <div className="absolute text-lg bg-csRed py-2 px-5 rounded-3xl text-center -bottom-5 border border-csRose400 flex gap-9 justify-between items-center">
             <button
