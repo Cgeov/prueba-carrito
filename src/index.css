@@ -2,8 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "RedHat";
+  src: url("/assets/fonts/RedHatText.ttf") format("truetype");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RedHat";
+  src: url("/fonts/RedHatTextItalic.ttf") format("truetype");
+  font-style: italic;
+}
+
 :root {
-  --custom-red: #c73b0f;
+  --custom-red: 199 59 15;
   --custom-rose-900: #260f08;
   --custom-rose-500: #87635a;
   --custom-rose-400: #ad8a85;
@@ -13,6 +25,11 @@
   --custom-green: #1ea575;
 }
 
-body{
+* {
+  font-family: 'RedHat';
+}
+
+body {
   background-color: var(--custom-rose-50);
+  color: var(--custom-rose-900)
 }

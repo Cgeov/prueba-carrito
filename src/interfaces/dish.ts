@@ -12,6 +12,7 @@ export interface IDishData{
     category: string;
     subTotal?: number;
     quantity?: number
+    imageResponsive?: string,
 }
 interface IImage{
     thumbnail: string,

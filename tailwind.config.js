@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        csRed: 'var(--custom-red)',
+        csRed: 'rgb(var(--custom-red) / <alpha-value>)',
         csRose900: 'var(--custom-rose-900)',
         csRose500: 'var(--custom-rose-500)',
         csRose400: 'var(--custom-rose-400)',
