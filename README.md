@@ -1,6 +1,6 @@
 # DISH CART
 
-[SITIO](https://cgeov.github.io/prueba-carrito/)
+[LINK WEBSITE](https://cgeov.github.io/prueba-carrito/)
 
 ## Technologies Used
 
