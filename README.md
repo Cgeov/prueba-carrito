@@ -24,11 +24,11 @@
    cd prueba-carrito
  ```
 3. Install dependencies
-   ```bash
+```bash
    npm install
-   ```
-5. Start the development server
-   ```bash
+```
+4. Start the development server
+```bash
    npm run dev
-   ```
+```
 Navigate to `http://localhost:5173/`. 
