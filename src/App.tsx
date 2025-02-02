@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import "./App.css";
 import DishCard from "./components/dishCard";
 import dishData from "./data/data.json";
 import useScreenSize from "./hooks/useScreenSize";
 import emptyCart from "./assets/emptyCart.svg";
 import useCartStore from "./store/storeCart";
-import deleteDish from "./assets/removeItem.svg";
 import carbonTree from "./assets/carbonTree.svg";
 import checkmark from "./assets/checkmark.svg";
 import { Modal } from "antd";
@@ -30,18 +28,20 @@ function App() {
       <h1 className="text-csRose900 font-bold text-4xl mt-5">Desserts</h1>
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-5 mt-7">
-          {dishData.map((dish: any, index: number) => {
+          {dishData.map((dish: IDishData, index: number) => {
             const { image, ...rest } = dish;
             return (
               <DishCard
                 key={index}
                 {...rest}
                 image={image}
-                imageResponsive={width < 640
-                  ? image.mobile
-                  : width < 1024
-                  ? image.tablet
-                  : image.desktop}
+                imageResponsive={
+                  width < 640
+                    ? image.mobile
+                    : width < 1024
+                    ? image.tablet
+                    : image.desktop
+                }
               />
             );
           })}
@@ -62,7 +62,7 @@ function App() {
             ) : (
               <>
                 <div>
-                  {cart.map((dish: any, index: number) => {
+                  {cart.map((dish: IDishData, index: number) => {
                     return (
                       <div
                         key={index}
@@ -85,10 +85,26 @@ function App() {
                             </div>
                           </div>
                         </div>
-                        <img
-                          className="cursor-pointer hover:fill-csRed"
+
+                        <div
                           onClick={() => deleteCart({ name: dish.name }, true)}
-                          src={deleteDish}></img>
+                          className="cursor-pointer text-csRed hover:text-csRose900">
+                          <svg
+                            width="25"
+                            height="25"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M10 1.25C5.125 1.25 1.25 5.125 1.25 10C1.25 14.875 5.125 18.75 10 18.75C14.875 18.75 18.75 14.875 18.75 10C18.75 5.125 14.875 1.25 10 1.25ZM10 17.5C5.875 17.5 2.5 14.125 2.5 10C2.5 5.875 5.875 2.5 10 2.5C14.125 2.5 17.5 5.875 17.5 10C17.5 14.125 14.125 17.5 10 17.5Z"
+                              fill="currentColor"
+                            />
+                            <path
+                              d="M13.375 14.375L10 11L6.625 14.375L5.625 13.375L9 10L5.625 6.625L6.625 5.625L10 9L13.375 5.625L14.375 6.625L11 10L14.375 13.375L13.375 14.375Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </div>
                       </div>
                     );
                   })}
@@ -125,26 +141,26 @@ function App() {
         closeIcon={false}>
         <div>
           <img src={checkmark} />
-          <h1 className="text-4xl font-bold">Order Confirmed</h1>
+          <h1 className="text-4xl font-bold mt-2">Order Confirmed</h1>
           <p className="text-csRose500 text-sm">We hope you enjoy your food!</p>
 
-          <div className="bg-csRose50 rounded-lg p-4 ">
+          <div className="bg-csRose50 rounded-lg p-4 mt-3">
             <div className="max-h-[400px] overflow-y-auto py-3">
               {cart.map((dish: IDishData, index: number) => {
                 return (
                   <div
                     key={index}
-                    className="flex w-full justify-between items-center border-b border-csRose100 mb-5">
+                    className="flex w-full pb-3 justify-between items-center border-b border-csRose100 mb-5">
                     <div className="flex gap-6 items-center">
                       <img
                         src={dish.image.thumbnail}
-                        className="w-[100px] h-[100px] rounded-md"
+                        className="w-[60px] h-[60px] rounded-md"
                       />
                       <div>
                         <p className="text-csRose900 font-semibold">
                           {dish.name}
                         </p>
-                        <div className="flex gap-3">
+                        <div className="flex gap-3 mt-3">
                           <span className="text-csRed font-semibold">
                             x{dish.quantity}
                           </span>
@@ -153,7 +169,7 @@ function App() {
                       </div>
                     </div>
 
-                    <span className="text-csRose500 font-semibold text-lg">
+                    <span className="font-semibold text-lg">
                       ${dish.subTotal ?? 0}
                     </span>
                   </div>
@@ -161,7 +177,7 @@ function App() {
               })}
             </div>
 
-            <div className="flex justify-between items-center mt-3">
+            <div className="flex justify-between items-center">
               Order Total
               <span className="font-bold text-2xl">${total}</span>
             </div>
